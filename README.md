@@ -6,6 +6,7 @@ PCRで必要な各種試薬の量やTm値から求めるthermal cyclerの温度�
 + Biopython
 + pandas
 + numpy
+
 いずれも2020-03-29現在で最新版を使用している。pip or anacondaで適宜入れて下さい。
 
 ## 使用方法
