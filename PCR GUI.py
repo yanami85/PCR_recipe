@@ -5,6 +5,31 @@ import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
+from bs4 import BeautifulSoup
+import os
+import shutil
+
+def bind_html(html_path_list: list) -> str:
+    '''複数のhtmlを順番に結合する
+
+    Args:
+        html_path_list ([str]): htmlファイルのpathリスト
+
+    Attributes:
+        pure_bound_html (str): 純粋にhtmlを文字列として 結合したもの
+        bound_html (str): pure_bound_htmlから結合部分を 取り除いたもの
+
+    Returns:
+        str
+    '''
+    soup_list = []
+    for html_path in html_path_list:
+        with open(html_path, encoding="utf-8") as f:
+            soup_list.append(BeautifulSoup(f.read()))
+    pure_bound_html = ''.join([soup.prettify() for soup in soup_list])
+    bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br><table border="1" class="dataframe">')
+    return bound_html
+
 
 # レイアウト設計
 layout_input =[
@@ -45,20 +70,19 @@ pcr.total_vol_μL_per_sample = int(values["total_vol_μL_per_sample"])
 pcr.create_pcr_recipe()
 
 layout_tables = [
-    [sg.Text("Tm値 (for KOD): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(30,1))],
-    [sg.Text("Tm値 (for PrimeSTAR): " + str(round(pcr.tm_value_GC, 1)) + "°C",size=(30,1))],
+    [sg.Text("Tm値 (Wallace法): " + str(round(pcr.tm_value_Wallace, 1)) + "°C",size=(50,1))],
+    [sg.Text("Tm値 (GC法): " + str(round(pcr.tm_value_GC, 1)) + "°C",size=(50,1))],
+    [sg.Text("Tm値 (最近接塩基法): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(50,1))],
     [sg.Table(
-        key='-TABLE-',
         values = pcr.thermal_list,
         headings = pcr.thermal_col_name
         )],
     [sg.Text(str(pcr.reagent_name),size=(20,1))],
     [sg.Table(
-        key='-TABLE-',
         values = pcr.conc_table_list,
         headings = pcr.conc_col_name
         )],
-    [sg.Button("Exit"), sg.Button("HTMLに出力")],
+    [sg.Button("HTMLに出力")],
     ]
 
 window = sg.Window('pcr_recipe', layout_tables, resizable = True)
@@ -70,8 +94,16 @@ while True:
     if event in (sg.WIN_CLOSED, 'Exit'):
         break
     if event in ("HTMLに出力"):
-        pcr.thermal_table.to_html(str(datetime.date.today()) + "_thermal_cycle.html")
-        pcr.conc_table.to_html(str(datetime.date.today()) + "_conc_table.html")
+        os.mkdir("temp")
+        pcr.tm_table.to_html("temp/" + str(datetime.date.today()) + "_tm_table.html")
+        pcr.thermal_table.to_html("temp/" + str(datetime.date.today()) + "_thermal_cycle.html")
+        pcr.conc_table.to_html("temp/" + str(datetime.date.today()) + "_conc_table.html")
+        html_path_list = ["temp/" + str(datetime.date.today()) + "_tm_table.html", "temp/" + str(datetime.date.today()) + "_thermal_cycle.html", "temp/" + str(datetime.date.today()) + "_conc_table.html"]
+        bound_html = bind_html(html_path_list)
+        with open(str(datetime.date.today())+".html", mode='w') as f:
+            f.write(bound_html)
+        shutil.rmtree("temp/")
         popup = sg.popup_ok('HTMLファイルを出力しました！')
         print(popup)
+        break
 window.close()

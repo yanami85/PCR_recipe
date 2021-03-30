@@ -22,9 +22,16 @@ class pcr_recipe: #インスタンス
     def calc_tm_value(self):
         self.primer_fw_seq = Seq(self.primer_fw.upper(), IUPAC.ambiguous_dna)
         self.primer_rv_seq = Seq(self.primer_rv.upper(), IUPAC.ambiguous_dna)
-        self.tm_value_NN = np.mean([mt.Tm_NN(self.primer_fw_seq, Na = 50, nn_table = mt.DNA_NN1), mt.Tm_NN(self.primer_rv_seq, Na = 50, nn_table = mt.DNA_NN1)]) # 最近接塩基法で計算
-        self.tm_value_GC = np.mean([mt.Tm_GC(self.primer_fw_seq, Na = 50, valueset = 1), mt.Tm_GC(self.primer_rv_seq, Na = 50, valueset = 1)]) # GC法で計算
         self.tm_value_Wallace = np.mean([mt.Tm_Wallace(self.primer_fw_seq), mt.Tm_Wallace(self.primer_rv_seq)]) # GC法で計算
+        self.tm_value_GC = np.mean([mt.Tm_GC(self.primer_fw_seq, Na = 50, valueset = 1), mt.Tm_GC(self.primer_rv_seq, Na = 50, valueset = 1)]) # GC法で計算
+        self.tm_value_NN = np.mean([mt.Tm_NN(self.primer_fw_seq, Na = 50, nn_table = mt.DNA_NN1), mt.Tm_NN(self.primer_rv_seq, Na = 50, nn_table = mt.DNA_NN1)]) # 最近接塩基法で計算
+        self.tm_table_column = ["計算手法","Tm値"]
+        self.tm_list = [
+            ["Wallace法", round(self.tm_value_Wallace, 1)],
+            ["GC法", round(self.tm_value_GC, 1)],
+            ["最近接塩基法", round(self.tm_value_NN, 1)]
+        ]
+        self.tm_table = pd.DataFrame(self.tm_list, columns = self.tm_table_column)
     
     def count_amplify_region(self):
         self.amplify_region_seq = Seq(self.amplify_region.upper(), IUPAC.ambiguous_dna)
