@@ -65,7 +65,7 @@ class pcr_recipe: #インスタンス
     
     def create_pcr_recipe(self): # 雑に作りすぎた。要改善
         self.create_thermal_cycle_plan()
-        self.conc_col_name = [r"Reagent", r"Usage/sample (μL)", r"Total amount", "Final concentration"]
+        self.conc_col_name = [r"Reagent", r"Usage/sample (μL)", r"必要量 (μL)", "Final concentration"]
         self.sample_amount = self.total_vol_μL_per_sample*self.sample_size*1.2
         if self.reagent_name == "KOD":
             self.conc_list = [
@@ -85,7 +85,7 @@ class pcr_recipe: #インスタンス
                 [str(self.template_conc_ng_μL) + " ng/μL Template DNA", self.total_vol_μL_per_sample/(self.template_conc_ng_μL/0.04), self.sample_amount/(self.template_conc_ng_μL/0.04), "0.04 ng/μL"],
             ]
         self.conc_table= pd.DataFrame(self.conc_list, columns= self.conc_col_name)
-        self.dw_list = ["DW", self.total_vol_μL_per_sample - self.conc_table["Usage/sample (μL)"].sum(), self.sample_amount - self.conc_table["Total amount"].sum(), "-"]
+        self.dw_list = ["DW", self.total_vol_μL_per_sample - self.conc_table["Usage/sample (μL)"].sum(), self.sample_amount - self.conc_table["必要量 (μL)"].sum(), "-"]
         self.conc_table_total = ["Total", self.total_vol_μL_per_sample,  self.sample_amount, "-"]
         self.conc_table.loc[7] = self.dw_list
         self.conc_table.loc[8] = self.conc_table_total
