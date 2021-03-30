@@ -88,7 +88,7 @@ class pcr_recipe: #インスタンス
                 ["55°C", "5 sec"],
                 ["72°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"],
                 ]
-        self.thermal_col_name = ["PCR temperature","time"]
+        self.thermal_col_name = ["Temperature","Time"]
         self.thermal_table = pd.DataFrame(self.thermal_list, columns = self.thermal_col_name)
     
     def create_pcr_recipe(self):
@@ -118,5 +118,6 @@ class pcr_recipe: #インスタンス
         self.conc_table_total = ["Total", self.total_vol_μL_per_sample,  self.sample_amount, "-"]
         self.conc_table.loc[7] = self.dw_list
         self.conc_table.loc[8] = self.conc_table_total
-        self.conc_table['sample size'] = self.sample_size
+        self.conc_table['Sample size'] = self.sample_size
         self.conc_table_list = self.conc_table.values.tolist()
+
