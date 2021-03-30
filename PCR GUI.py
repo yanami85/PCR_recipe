@@ -37,7 +37,7 @@ layout_input =[
     [sg.Text("プライマー foward (5' → 3')",size=(20,1)), sg.InputText(key = 'primer_fw')],
     [sg.Text("プライマー reverse (5' → 3')",size=(20,1)), sg.InputText(key = 'primer_rv')],
     [sg.Text("プライマー濃度 (μM)",size=(20,1)), sg.InputText("10", key = 'primer_conc_μM')],
-    [sg.Text("増幅する領域",size=(20,1)), sg.InputText(key = 'amplify_region')],
+    [sg.Text("増幅する領域",size=(20,1)), sg.InputText("A"*10000, key = 'amplify_region')],
     [sg.Text("テンプレート濃度 (ng/μL)",size=(20,1)), sg.InputText("1", key = 'template_conc_ng_μL')],
     [sg.Text("使うメーカー",size=(20,1)), sg.Combo(["KOD -Plus-", "KOD One", "PrimeSTAR"])],
     [sg.Text("サンプルの本数",size=(20,1)), sg.InputText("1", key = 'sample_size')],

@@ -17,8 +17,8 @@ pip or anacondaで適宜入れて下さい。
 2. PCR GUI.pyを走らせる
 3. 以下の画面が出てくるので、primer、プライマー濃度、増幅領域、テンプレート濃度 etc. を入力
    (使うメーカーは、2020-03-29現在で**KOD Plus, KOD One, PrimeSTAR**に対応している。)
-   ![image](https://user-images.githubusercontent.com/41857834/112964797-9c107680-9183-11eb-91d3-5db7c93d7ba1.png)
+   ![image](https://user-images.githubusercontent.com/41857834/112975935-3629ec00-918f-11eb-8fc1-2d04f53a6c8c.png)
 4. 「次へ」をクリックすれば、Thermal cyclerの設定と必要試薬量が一覧で見られる。
-![image](https://user-images.githubusercontent.com/41857834/112964841-a6cb0b80-9183-11eb-9f41-e1a54a145b5d.png)
+![image](https://user-images.githubusercontent.com/41857834/112975970-3f1abd80-918f-11eb-9953-96c552083616.png)
 5. 「HTMLに出力」をクリックすると1. のディレクトリにHTMLファイルが保存される。
-![image](https://user-images.githubusercontent.com/41857834/112964922-b9454500-9183-11eb-9eb3-f9186787908c.png)
+![image](https://user-images.githubusercontent.com/41857834/112976008-4a6de900-918f-11eb-8cc8-a16446bc6251.png)
