@@ -58,7 +58,7 @@ layout_tables = [
         values = pcr.conc_table_list,
         headings = pcr.conc_col_name
         )],
-    [sg.Button("Exit")],
+    [sg.Button("Exit"), sg.Button("HTMLに出力")],
     ]
 
 window = sg.Window('pcr_recipe', layout_tables, resizable = True)
@@ -69,7 +69,8 @@ while True:
     event, values = window.read()
     if event in (sg.WIN_CLOSED, 'Exit'):
         break
+    if event in ("HTMLに出力"):
+        pcr.thermal_table.to_html(str(datetime.date.today()) + "_thermal_cycle.html")
+        pcr.conc_table.to_html(str(datetime.date.today()) + "_conc_table.html")
 window.close()
 
-pcr.thermal_table.to_html(str(datetime.date.today()) + "_thermal_cycle.html")
-pcr.conc_table.to_html(str(datetime.date.today()) + "_conc_table.html")
