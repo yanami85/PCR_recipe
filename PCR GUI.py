@@ -4,13 +4,14 @@ from  pcr_recipe import pcr_recipe
 import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import datetime
+from PIL import ImageFont, ImageDraw, Image
 # レイアウト設計
 layout_input =[
-    [sg.Text("primer foward (5' → 3')",size=(20,1)), sg.InputText("GGGGGGGGGGGGGGG", key = 'primer_fw')],
-    [sg.Text("primer reverse (5' → 3')",size=(20,1)), sg.InputText("GGGGGGGGGGGGGG", key = 'primer_rv')],
+    [sg.Text("primer foward (5' → 3')",size=(20,1)), sg.InputText(key = 'primer_fw')],
+    [sg.Text("primer reverse (5' → 3')",size=(20,1)), sg.InputText(key = 'primer_rv')],
     [sg.Text("プライマー濃度 (μM)",size=(20,1)), sg.InputText("10", key = 'primer_conc_μM')],
-    [sg.Text("増幅する領域",size=(20,1)), sg.InputText("ATGCATGCATGCATGCATGCAaaaaaaaaaaaaaaaaaaaaaa", key = 'amplify_region')],
+    [sg.Text("増幅する領域",size=(20,1)), sg.InputText(key = 'amplify_region')],
     [sg.Text("テンプレート濃度 (ng/μL)",size=(20,1)), sg.InputText("1", key = 'template_conc_ng_μL')],
     [sg.Text("使うメーカー",size=(20,1)), sg.Combo(["KOD", "PrimeSTAR"])],
     [sg.Text("サンプルの本数",size=(20,1)), sg.InputText("1", key = 'sample_size')],
@@ -44,19 +45,20 @@ pcr.total_vol_μL_per_sample = int(values["total_vol_μL_per_sample"])
 pcr.create_pcr_recipe()
 
 layout_tables = [
-        [sg.Text("Thermal cycler",size=(20,1))],
-        [sg.Table(
-            key='-TABLE-',
-            values = pcr.thermal_list,
-            headings = pcr.thermal_col_name
-            )],
-        [sg.Text(str(pcr.reagent_name),size=(20,1))],
-        [sg.Table(
-            key='-TABLE-',
-            values = pcr.conc_table_list,
-            headings = pcr.conc_col_name
-            )],
-        [sg.Button("Exit")],
+    [sg.Text("Tm値 (for KOD): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(30,1))],
+    [sg.Text("Tm値 (for PrimeSTAR): " + str(round(pcr.tm_value_GC, 1)) + "°C",size=(30,1))],
+    [sg.Table(
+        key='-TABLE-',
+        values = pcr.thermal_list,
+        headings = pcr.thermal_col_name
+        )],
+    [sg.Text(str(pcr.reagent_name),size=(20,1))],
+    [sg.Table(
+        key='-TABLE-',
+        values = pcr.conc_table_list,
+        headings = pcr.conc_col_name
+        )],
+    [sg.Button("Exit")],
     ]
 
 window = sg.Window('pcr_recipe', layout_tables, resizable = True)
@@ -68,3 +70,6 @@ while True:
     if event in (sg.WIN_CLOSED, 'Exit'):
         break
 window.close()
+
+pcr.thermal_table.to_html(str(datetime.date.today()) + "_thermal_cycle.html")
+pcr.conc_table.to_html(str(datetime.date.today()) + "_conc_table.html")

@@ -1,9 +1,9 @@
 # coding: utf-8
+from Bio import SeqIO
 import dataclasses
 from dataclasses import dataclass
 from Bio.Alphabet import IUPAC
 from Bio.Seq import Seq
-from Bio import SeqIO
 from Bio.SeqUtils import MeltingTemp as mt
 import pandas as pd
 import numpy as np
