@@ -5,7 +5,7 @@ import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
-from PIL import ImageFont, ImageDraw, Image
+
 # レイアウト設計
 layout_input =[
     [sg.Text("primer foward (5' → 3')",size=(20,1)), sg.InputText(key = 'primer_fw')],

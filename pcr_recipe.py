@@ -25,8 +25,8 @@ class pcr_recipe: #インスタンス
         else:
             self.primer_fw_seq = Seq(self.primer_fw.upper(), IUPAC.ambiguous_dna)
             self.primer_rv_seq = Seq(self.primer_rv.upper(), IUPAC.ambiguous_dna)
-            self.tm_value_NN = min(mt.Tm_NN(self.primer_fw_seq), mt.Tm_NN(self.primer_rv_seq)) # 最近接塩基法で計算
-            self.tm_value_GC = min(mt.Tm_GC(self.primer_fw_seq), mt.Tm_GC(self.primer_rv_seq)) # GC法で計算
+            self.tm_value_NN = min(mt.Tm_NN(self.primer_fw_seq, Na=50, Tris=10, Mg=1.5, nn_table = mt.DNA_NN4), mt.Tm_NN(self.primer_rv_seq, Na=50, Tris=10, Mg=1.5, nn_table = mt.DNA_NN4)) # 最近接塩基法で計算
+            self.tm_value_GC = min(mt.Tm_GC(self.primer_fw_seq, Na=50, Tris=10, Mg=1.5), mt.Tm_GC(self.primer_rv_seq, Na=50, Tris=10, Mg=1.5)) # GC法で計算
     
     def count_amplify_region(self):
         self.amplify_region_seq = Seq(self.amplify_region.upper(), IUPAC.ambiguous_dna)
