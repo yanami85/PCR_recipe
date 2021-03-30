@@ -28,6 +28,7 @@ def bind_html(html_path_list: list) -> str:
             soup_list.append(BeautifulSoup(f.read()))
     pure_bound_html = ''.join([soup.prettify() for soup in soup_list])
     bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br><table border="1" class="dataframe">')
+    bound_html = bound_html.replace("right", "center")
     return bound_html
 
 
@@ -94,16 +95,17 @@ while True:
     if event in (sg.WIN_CLOSED, 'Exit'):
         break
     if event in ("HTMLに出力"):
-        os.mkdir("temp")
-        pcr.tm_table.to_html("temp/" + str(datetime.date.today()) + "_tm_table.html")
-        pcr.thermal_table.to_html("temp/" + str(datetime.date.today()) + "_thermal_cycle.html")
-        pcr.conc_table.to_html("temp/" + str(datetime.date.today()) + "_conc_table.html")
+        os.mkdir("temp") # 一時フォルダの作成
+        pcr.tm_table.to_html("temp/" + str(datetime.date.today()) + "_tm_table.html", index = False)
+        pcr.thermal_table.to_html("temp/" + str(datetime.date.today()) + "_thermal_cycle.html", index = False)
+        pcr.conc_table.to_html("temp/" + str(datetime.date.today()) + "_conc_table.html", index = False)
         html_path_list = ["temp/" + str(datetime.date.today()) + "_tm_table.html", "temp/" + str(datetime.date.today()) + "_thermal_cycle.html", "temp/" + str(datetime.date.today()) + "_conc_table.html"]
-        bound_html = bind_html(html_path_list)
-        with open(str(datetime.date.today())+".html", mode='w') as f:
-            f.write(bound_html)
-        shutil.rmtree("temp/")
-        popup = sg.popup_ok('HTMLファイルを出力しました！')
-        print(popup)
+        bound_html = bind_html(html_path_list) # html結合
+        with open(str(datetime.date.today())+".html", mode='w', encoding="utf-8") as f:
+            f.write("<br>" + "プライマー forward: " + str(pcr.primer_fw_seq) + "<br>")
+            f.write("プライマー reverse: " + str(pcr.primer_rv_seq) + "<br>")
+            f.write(bound_html) # html出力
+        shutil.rmtree("temp/") # 一時フォルダの削除
+        print(sg.popup_ok('HTMLファイルを出力しました！'))
         break
 window.close()
