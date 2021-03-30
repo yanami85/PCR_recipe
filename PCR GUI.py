@@ -8,12 +8,12 @@ import datetime
 
 # レイアウト設計
 layout_input =[
-    [sg.Text("プライマー foward (5' → 3')",size=(20,1)), sg.InputText(key = 'primer_fw')],
-    [sg.Text("プライマー reverse (5' → 3')",size=(20,1)), sg.InputText(key = 'primer_rv')],
+    [sg.Text("プライマー foward (5' → 3')",size=(20,1)), sg.InputText('ttaatacgactcactatagg', key = 'primer_fw')],
+    [sg.Text("プライマー reverse (5' → 3')",size=(20,1)), sg.InputText('ttaatacgactcactatagg', key = 'primer_rv')],
     [sg.Text("プライマー濃度 (μM)",size=(20,1)), sg.InputText("10", key = 'primer_conc_μM')],
-    [sg.Text("増幅する領域",size=(20,1)), sg.InputText(key = 'amplify_region')],
+    [sg.Text("増幅する領域",size=(20,1)), sg.InputText("A"*10000, key = 'amplify_region')],
     [sg.Text("テンプレート濃度 (ng/μL)",size=(20,1)), sg.InputText("1", key = 'template_conc_ng_μL')],
-    [sg.Text("使うメーカー",size=(20,1)), sg.Combo(["KOD", "PrimeSTAR"])],
+    [sg.Text("使うメーカー",size=(20,1)), sg.Combo(["KOD -Plus-", "KOD One", "PrimeSTAR"])],
     [sg.Text("サンプルの本数",size=(20,1)), sg.InputText("1", key = 'sample_size')],
     [sg.Text("反応総量 (μL)",size=(20,1)), sg.InputText("25", key = 'total_vol_μL_per_sample')],
     [sg.Submit(button_text = "Cancel"), sg.Submit(button_text = "次へ")]
@@ -72,4 +72,6 @@ while True:
     if event in ("HTMLに出力"):
         pcr.thermal_table.to_html(str(datetime.date.today()) + "_thermal_cycle.html")
         pcr.conc_table.to_html(str(datetime.date.today()) + "_conc_table.html")
+        popup = sg.popup_ok('HTMLファイルを出力しました！')
+        print(popup)
 window.close()
