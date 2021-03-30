@@ -1,6 +1,8 @@
 # PCR_recipe
-PCRで必要な各種試薬の量やTm値から求めるthermal cyclerの温度設定を自動的に出力するソフト。
-(required python > 3.7)
+
+## What's PCR_recipe?
+PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に出力するソフト。
+**(python > 3.7)**
 
 ## 必要なもの
 + dataclasses
@@ -9,8 +11,7 @@ PCRで必要な各種試薬の量やTm値から求めるthermal cyclerの温度�
 + numpy
 + pySimpleGUI
 
-いずれも2020-03-29現在で最新版を使用している。pip or anacondaで適宜入れて下さい。
-
+pip or anacondaで適宜入れて下さい。
 ## 使用方法
 1. PCR GUI.pyとpcr_recipe.pyを同じディレクトリに格納する。
 2. PCR GUI.pyを走らせる
