@@ -2,7 +2,7 @@
 from Bio import SeqIO
 import dataclasses
 from dataclasses import dataclass
-from Bio.Alphabet import IUPAC
+#from Bio.Alphabet import IUPAC
 from Bio.Seq import Seq
 from Bio.SeqUtils import MeltingTemp as mt
 import pandas as pd
@@ -20,8 +20,8 @@ class pcr_recipe: #インスタンス
     sample_size: int = 5 # サンプルサイズ
     
     def calc_tm_value(self):
-        self.primer_fw_seq = Seq(self.primer_fw.upper(), IUPAC.ambiguous_dna)
-        self.primer_rv_seq = Seq(self.primer_rv.upper(), IUPAC.ambiguous_dna)
+        self.primer_fw_seq = Seq(self.primer_fw.upper())
+        self.primer_rv_seq = Seq(self.primer_rv.upper())
         self.tm_value_Wallace = np.mean([mt.Tm_Wallace(self.primer_fw_seq), mt.Tm_Wallace(self.primer_rv_seq)]) # GC法で計算
         self.tm_value_GC = np.mean([mt.Tm_GC(self.primer_fw_seq, Na = 50, valueset = 7), mt.Tm_GC(self.primer_rv_seq, Na = 50, valueset = 7)]) # GC法で計算
         self.tm_value_NN = np.mean([mt.Tm_NN(self.primer_fw_seq, Na = 50, nn_table = mt.DNA_NN1), mt.Tm_NN(self.primer_rv_seq, Na = 50, nn_table = mt.DNA_NN1)]) # 最近接塩基法で計算
@@ -34,7 +34,7 @@ class pcr_recipe: #インスタンス
         self.tm_table = pd.DataFrame(self.tm_list, columns = self.tm_table_column)
     
     def count_amplify_region(self):
-        self.amplify_region_seq = Seq(self.amplify_region.upper(), IUPAC.ambiguous_dna)
+        self.amplify_region_seq = Seq(self.amplify_region.upper())
         self.amplify_regipon_kbp = len(self.amplify_region_seq)/1000
     
     def create_thermal_cycle_plan(self):
