@@ -26,7 +26,7 @@ def bind_html(html_path_list: list) -> str:
         with open(html_path, encoding="utf-8") as f:
             soup_list.append(BeautifulSoup(f.read()))
     pure_bound_html = ''.join([soup.prettify() for soup in soup_list])
-    bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br><table>')
+    bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br>\n<table>')
     bound_html = bound_html.replace('<tr style="text-align: right;">', '<tr>')
     return bound_html
 
@@ -96,7 +96,7 @@ window = sg.Window('PCR レシピ 結果', layout_tables, resizable = True)
 html_script = \
     '<html>\n'\
     + '<head>\n' \
-        + '<link rel="stylesheet" type="text/css" href="df_style.css">\n'\
+        + '<link rel="stylesheet" type="text/css" href="table_style.css">\n'\
     + '</head>\n'\
     + '<body>\n'\
     + '<br>\n'\
