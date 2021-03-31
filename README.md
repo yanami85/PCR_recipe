@@ -2,16 +2,17 @@
 
 ## What's PCR_recipe?
 PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に出力するソフト。
-**(python > 3.7)**
+**python 3.7 or 3.8を推奨します。**
 
 ## 必要なもの
-+ dataclasses
-+ Biopython
-+ pandas
-+ numpy
-+ pySimpleGUI
-
++ dataclasses 0.6
++ Biopython 1.78
++ pandas 1.2.3
++ numpy 1.19.2
++ pySimpleGUI 4.38.0
 pip or anacondaで適宜入れて下さい。
+(**python 3.9だとBiopython 1.78をインストールできない可能性があります。**)
+
 ## 使用方法
 1. PCR GUI.pyとpcr_recipe.py, df_style.cssを同じディレクトリに格納する。
 2. PCR GUI.pyを走らせる
