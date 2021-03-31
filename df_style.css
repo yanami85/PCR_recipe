@@ -1,14 +1,38 @@
-.mystyle {
+body {
+    background:#FFF;
+    font-family:Arial, "游ゴシック", sans-serif;
+    font-size:10.5px;
+}
+
+thead, tfoot {
+    background-color: #fff;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    color: #000;
+}
+
+tbody {
+    background-color: #fff;
+}
+
+caption {
+    padding: 10px;
+    caption-side: bottom;
+}
+
+table {
     border-collapse: collapse;
-  }
+    border: 2px solid #000;
+    letter-spacing: 1px;
+    font-size:10.5px;
+}
 
-.mystyle thead {
-    border-top: 3px solid black;
-    border-bottom: 3px solid black;
-  }
+td,
+th {
+    border-top: 1px solid #000;
+    padding: 5px 10px;
+}
 
-.mystyle th, .mystyle td {
-    padding: 10px 20px;
+td {
     text-align: center;
-    border-bottom: 1px solid black;
-  }
+}

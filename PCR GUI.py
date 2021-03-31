@@ -27,10 +27,9 @@ def bind_html(html_path_list: list) -> str:
         with open(html_path, encoding="utf-8") as f:
             soup_list.append(BeautifulSoup(f.read()))
     pure_bound_html = ''.join([soup.prettify() for soup in soup_list])
-    bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br><table class="mystyle">')
+    bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br><table>')
     bound_html = bound_html.replace('<tr style="text-align: right;">', '<tr>')
     return bound_html
-
 
 # レイアウト設計
 layout_input =[
@@ -95,6 +94,21 @@ layout_tables = [
 
 window = sg.Window('PCR レシピ 結果', layout_tables, resizable = True)
 
+html_script = \
+    '<html>\n'\
+    + '<head>\n' \
+        + '<link rel="stylesheet" type="text/css" href="df_style.css">\n'\
+    + '</head>\n'\
+    + '<body>\n'\
+    + '<br>\n'\
+    + "プライマー forward: " + str(pcr.primer_fw_seq) \
+    + "\n<br>"\
+    + "\nプライマー reverse: " + str(pcr.primer_rv_seq) \
+    + "\n<br>\n"
+
+html_script_end  = \
+    '\n</body>\n'\
+    + '</html>'
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
     event, values = window.read()
@@ -108,10 +122,9 @@ while True:
         html_path_list = ["temp/" + str(datetime.date.today()) + "_tm_table.html", "temp/" + str(datetime.date.today()) + "_thermal_cycle.html", "temp/" + str(datetime.date.today()) + "_conc_table.html"]
         bound_html = bind_html(html_path_list) # html結合
         with open(str(datetime.date.today())+".html", mode='w', encoding="utf-8") as f:
-            f.write('<head> <link rel="stylesheet" type="text/css" href="df_style.css"> </head>')
-            f.write("<br>" + "プライマー forward: " + str(pcr.primer_fw_seq) + "<br>")
-            f.write("プライマー reverse: " + str(pcr.primer_rv_seq) + "<br>")
+            f.write(html_script)
             f.write(bound_html) # html出力
+            f.write(html_script_end)
         shutil.rmtree("temp/") # 一時フォルダの削除
         print(sg.popup_ok('HTMLファイルを出力しました！'))
         break
