@@ -26,4 +26,4 @@ pip or anacondaで適宜入れて下さい。
 
 5. 「HTMLに出力」をクリックすると1. のディレクトリにHTMLファイルが保存される
 
-![image](https://user-images.githubusercontent.com/41857834/112976008-4a6de900-918f-11eb-8cc8-a16446bc6251.png)
+![image](https://user-images.githubusercontent.com/41857834/113079291-bbed7c00-920f-11eb-86d8-ef2df6d347d5.png)
