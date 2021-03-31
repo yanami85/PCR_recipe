@@ -11,7 +11,7 @@ PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に
 + numpy 1.19.2
 + pySimpleGUI 4.38.0
 
-pip or anacondaで適宜入れて下さい。
+pip or anacondaで適宜入れて下さい。  
 (**python 3.9だとBiopython 1.78をインストールできない可能性があります。
 その場合はBiopython 1.77をインストールして下さい**)
 
