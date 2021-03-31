@@ -13,7 +13,7 @@ PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に
 
 pip or anacondaで適宜入れて下さい。
 ## 使用方法
-1. PCR GUI.pyとpcr_recipe.pyを同じディレクトリに格納する。
+1. PCR GUI.pyとpcr_recipe.py, df_style.cssを同じディレクトリに格納する。
 2. PCR GUI.pyを走らせる
 3. 以下の画面が出てくるので、primer、プライマー濃度、増幅領域、テンプレート濃度 etc. を入力
 (使うメーカーは、2020-03-29現在で**KOD Plus, KOD One, PrimeSTAR**に対応している。) 
