@@ -18,7 +18,8 @@ pip or anacondaで適宜入れて下さい。
 1. PCR GUI.pyとpcr_recipe.py, df_style.cssを同じディレクトリに格納する。
 2. PCR GUI.pyを走らせる
 3. 以下の画面が出てくるので、primer、プライマー濃度、増幅領域、テンプレート濃度 etc. を入力
-(使うメーカーは、2020-03-29現在で**KOD Plus, KOD One, PrimeSTAR**に対応している。) 
+
+(使うメーカーは、2020-03-31現在で**KOD Plus, KOD One, PrimeSTAR**に対応。)
 
 ![image](https://user-images.githubusercontent.com/41857834/113080175-6ade8780-9211-11eb-9497-d704d9e512cd.png)
 
