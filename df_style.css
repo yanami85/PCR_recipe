@@ -3,8 +3,6 @@
   }
 
 .mystyle thead {
-    /* １番上の線 */
-    /* #A28C63っていうのが色の名前なので、ここをお好みで */
     border-top: 3px solid black;
     border-bottom: 3px solid black;
   }
@@ -12,7 +10,5 @@
 .mystyle th, .mystyle td {
     padding: 10px 20px;
     text-align: center;
-    /* ２番目以降の線 */
-    /* 色はお好みで */
     border-bottom: 1px solid black;
   }
