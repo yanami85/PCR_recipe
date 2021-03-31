@@ -15,7 +15,7 @@ pip or anacondaで適宜入れて下さい。
 (**python 3.9だとBiopython 1.78をインストールできない可能性があります。**)
 
 ## 使用方法
-1. PCR GUI.pyとpcr_recipe.py, df_style.cssを同じディレクトリに格納する。
+1. PCR GUI.pyとpcr_recipe.py, table_style.cssを同じディレクトリに格納する。
 2. PCR GUI.pyを走らせる
 3. 以下の画面が出てくるので、primer、プライマー濃度、増幅領域、テンプレート濃度 etc. を入力
 
