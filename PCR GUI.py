@@ -2,12 +2,11 @@
 # PCR_recipe.pyと同じディレクトリにこのファイルを置く
 from  pcr_recipe import pcr_recipe
 import PySimpleGUI as sg
-import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
-from bs4 import BeautifulSoup
 import os
 import shutil
+from bs4 import BeautifulSoup
 
 def bind_html(html_path_list: list) -> str:
     '''複数のhtmlを順番に結合する
