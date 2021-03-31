@@ -27,8 +27,8 @@ def bind_html(html_path_list: list) -> str:
         with open(html_path, encoding="utf-8") as f:
             soup_list.append(BeautifulSoup(f.read()))
     pure_bound_html = ''.join([soup.prettify() for soup in soup_list])
-    bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br><table border="1" class="dataframe">')
-    bound_html = bound_html.replace("right", "center")
+    bound_html = pure_bound_html.replace('<table border="1" class="dataframe">', '<br><table class="mystyle">')
+    bound_html = bound_html.replace('<tr style="text-align: right;">', '<tr>')
     return bound_html
 
 
@@ -71,15 +71,15 @@ pcr.total_vol_μL_per_sample = int(values["total_vol_μL_per_sample"])
 pcr.create_pcr_recipe()
 
 column_1 = [
-    [sg.Text("プライマー forward: " + str(pcr.primer_fw_seq), size=(25,1))],
-    [sg.Text("プライマー reverse: " + str(pcr.primer_rv_seq), size=(25,1))],
+    [sg.Text("プライマー forward: " + str(pcr.primer_fw_seq), size=(45,1))],
+    [sg.Text("プライマー reverse: " + str(pcr.primer_rv_seq), size=(45,1))],
     [sg.Text("Tm値 (Wallace法): " + str(round(pcr.tm_value_Wallace, 1)) + "°C",size=(25,1))],
     [sg.Text("Tm値 (GC法): " + str(round(pcr.tm_value_GC, 1)) + "°C",size=(25,1))],
     [sg.Text("Tm値 (最近接塩基法): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(25,1))]
     ]
 
 column_2 = [
-    [sg.Text("Termal cycler")],
+    [sg.Text("Termal cycler設定")],
     [sg.Table(
     values = pcr.thermal_list,
     headings = pcr.thermal_col_name)]
@@ -93,7 +93,7 @@ layout_tables = [
         headings = pcr.conc_col_name)],
     [sg.Button("HTMLに出力")]]
 
-window = sg.Window('pcr_recipe', layout_tables, resizable = True)
+window = sg.Window('PCR レシピ 結果', layout_tables, resizable = True)
 
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
@@ -108,6 +108,7 @@ while True:
         html_path_list = ["temp/" + str(datetime.date.today()) + "_tm_table.html", "temp/" + str(datetime.date.today()) + "_thermal_cycle.html", "temp/" + str(datetime.date.today()) + "_conc_table.html"]
         bound_html = bind_html(html_path_list) # html結合
         with open(str(datetime.date.today())+".html", mode='w', encoding="utf-8") as f:
+            f.write('<head> <link rel="stylesheet" type="text/css" href="df_style.css"> </head>')
             f.write("<br>" + "プライマー forward: " + str(pcr.primer_fw_seq) + "<br>")
             f.write("プライマー reverse: " + str(pcr.primer_rv_seq) + "<br>")
             f.write(bound_html) # html出力
