@@ -46,7 +46,7 @@ class pcr_recipe: #インスタンス
                 ["94°C", "2 min"],
                 ["94°C", "15 sec"],
                 [str(round(self.tm_value_NN - 5)) + "°C", "30 sec"],
-                ["68°C",  str(round(self.amplify_regipon_kbp, 2)) + " min"]
+                ["68°C",  str(round(self.amplify_regipon_kbp, 2)*60) + " sec"]
                 ]
                 
         elif self.reagent_name == "KOD One":
@@ -88,9 +88,18 @@ class pcr_recipe: #インスタンス
                 ["55°C", "5 sec"],
                 ["72°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"],
                 ]
+        elif self.reagent_name == "Ex Taq": # PrimeSTARの時の温度設定
+            # Tm値(tm_value_Wallace -5)が55℃以上の場合→5 sec.に設定
+            # Tm値(tm_value_Wallace - 5)が55℃未満の場合→15 sec.に設定
+            # プライマーが25 merを超える場合は、アニーリング時間を5 sec.に設定
+                self.thermal_list = [
+                ["98°C", "10 sec"],
+                ["55°C", "30 sec"],
+                ["72°C", str(round(self.amplify_regipon_kbp, 2)*60) + "sec"],
+                ]
         self.thermal_col_name = ["Temperature","Time"]
         self.thermal_table = pd.DataFrame(self.thermal_list, columns = self.thermal_col_name)
-    
+
     def create_pcr_recipe(self):
         # 必要試薬をpandas DataFrameに出力する (W/O DW)。
         self.create_thermal_cycle_plan()

@@ -37,7 +37,7 @@ layout_input =[
     [sg.Text("プライマー濃度 (μM)",size=(25,1)), sg.InputText("10", key = 'primer_conc_μM')],
     [sg.Text("増幅する領域",size=(25,1)), sg.InputText(key = 'amplify_region')],
     [sg.Text("テンプレート濃度 (ng/μL)",size=(25,1)), sg.InputText("1", key = 'template_conc_ng_μL')],
-    [sg.Text("使うメーカー",size=(25,1)), sg.Combo(["KOD -Plus-", "KOD One", "PrimeSTAR"])],
+    [sg.Text("使うメーカー",size=(25,1)), sg.Combo(["KOD -Plus-", "KOD One", "PrimeSTAR", "Ex Taq"])],
     [sg.Text("サンプルの本数",size=(25,1)), sg.InputText("1", key = 'sample_size')],
     [sg.Text("反応総量 (μL)",size=(25,1)), sg.InputText("25", key = 'total_vol_μL_per_sample')],
     [sg.Submit(button_text = "Cancel"), sg.Submit(button_text = "次へ")]
