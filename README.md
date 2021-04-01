@@ -2,9 +2,10 @@
 
 ## What's PCR_recipe?
 PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に出力するソフト。
-**python > 3.7を推奨します。**
+
 
 ## 必要なもの
++ **python > 3.7**
 + dataclasses 0.6
 + Biopython 1.78
 + pandas 1.2.3
