@@ -1,9 +1,9 @@
 # PCR_recipe
 
 ## What's PCR_recipe?
-PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に出力するソフト。
+PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に出力するソフト。  
 **python > 3.7を推奨します。**
-
+現在**KOD Plus, KOD One, PrimeSTAR, Taq EX**に対応。
 ## 必要なもの
 + dataclasses 0.6
 + Biopython 1.78
@@ -19,8 +19,6 @@ pip or anacondaで適宜入れて下さい。
 1. PCR GUI.pyとpcr_recipe.py, table_style.cssを同じディレクトリに格納する。
 2. PCR GUI.pyを走らせる
 3. 以下の画面が出てくるので、primer、プライマー濃度、増幅領域、テンプレート濃度 etc. を入力
-
-(使うメーカーは、2020-03-31現在で**KOD Plus, KOD One, PrimeSTAR**に対応。)
 
 ![image](https://user-images.githubusercontent.com/41857834/113080175-6ade8780-9211-11eb-9497-d704d9e512cd.png)
 
