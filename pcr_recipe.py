@@ -121,6 +121,15 @@ class pcr_recipe: #インスタンス
                 [str(self.primer_conc_μM) + " μM Primer_rv", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
                 [str(self.template_conc_ng_μL) + " ng/μL Template DNA", self.total_vol_μL_per_sample/(self.template_conc_ng_μL/0.04), self.sample_amount/(self.template_conc_ng_μL/0.04), "0.04 ng/μL"],
             ]
+        elif self.reagent_name == "Ex Taq":
+            self.conc_list = [
+                ["10×PCR Buffer", self.total_vol_μL_per_sample/10, self.sample_amount/10, "1x"],
+                [str(self.primer_conc_μM) + " μM Primer_fw", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
+                [str(self.primer_conc_μM) + " μM Primer_rv", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
+                ["dNTP Mixture （各2.5 mM）", self.total_vol_μL_per_sample*4/50, self.sample_amount*4/50, "0.2 mM"],
+                [str(self.template_conc_ng_μL) + " ng/μL Template DNA", self.total_vol_μL_per_sample/(self.template_conc_ng_μL/0.04), self.sample_amount/(self.template_conc_ng_μL/0.04), "0.04 ng/μL"],
+                ["TaKaRa Ex Taq （5 U/μl）", self.total_vol_μL_per_sample*0.005, self.sample_amount*0.005, "0.025 U/μL"]
+            ]
         self.conc_col_name = ["Reagent", r"Usage/sample (μL)", "必要量 (μL)", "Final concentration"] # Column name
         self.conc_table= pd.DataFrame(self.conc_list, columns= self.conc_col_name) # tableをDataFrameで作成
         self.dw_list = ["DW", self.total_vol_μL_per_sample - self.conc_table["Usage/sample (μL)"].sum(), self.sample_amount - self.conc_table["必要量 (μL)"].sum(), "-"] # Total量からDWの必要量を計算

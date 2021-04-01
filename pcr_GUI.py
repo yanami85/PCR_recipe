@@ -69,11 +69,12 @@ pcr.total_vol_μL_per_sample = int(values["total_vol_μL_per_sample"])
 pcr.create_pcr_recipe()
 
 column_1 = [
-    [sg.Text("プライマー forward: " + str(pcr.primer_fw_seq), size=(45,1))],
-    [sg.Text("プライマー reverse: " + str(pcr.primer_rv_seq), size=(45,1))],
+    [sg.Text("プライマー forward: " + str(pcr.primer_fw_seq), size=(50,2))],
+    [sg.Text("プライマー reverse: " + str(pcr.primer_rv_seq), size=(50,2))],
     [sg.Text("Tm値 (Wallace法): " + str(round(pcr.tm_value_Wallace, 1)) + "°C",size=(25,1))],
     [sg.Text("Tm値 (GC法): " + str(round(pcr.tm_value_GC, 1)) + "°C",size=(25,1))],
-    [sg.Text("Tm値 (最近接塩基法): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(25,1))]
+    [sg.Text("Tm値 (最近接塩基法): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(25,1))],
+    [sg.Text("試薬: " + str(pcr.reagent_name))]
     ]
 
 column_2 = [
@@ -85,7 +86,6 @@ column_2 = [
 
 layout_tables = [
     [sg.Column(column_1, justification= "center"), sg.Column(column_2, justification= "center")],
-    [sg.Text("試薬: " + str(pcr.reagent_name))],
     [sg.Table(
         values = pcr.conc_table_list,
         headings = pcr.conc_col_name)],
@@ -103,7 +103,8 @@ html_script = \
     + "プライマー forward: " + str(pcr.primer_fw_seq) \
     + "\n<br>"\
     + "\nプライマー reverse: " + str(pcr.primer_rv_seq) \
-    + "\n<br>\n"
+    + "\n<br>\n"\
+    + "使用した酵素: " + str(pcr.reagent_name)
 
 html_script_end  = \
     '\n</body>\n'\
