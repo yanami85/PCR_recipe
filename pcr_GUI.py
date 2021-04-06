@@ -89,7 +89,8 @@ layout_tables = [
     [sg.Table(
         values = pcr.conc_table_list,
         headings = pcr.conc_col_name)],
-    [sg.Button("HTMLに出力")]]
+    [sg.Button("HTMLに出力"), sg.Button("保存せずに終了")]
+    ]
 
 window = sg.Window('PCR レシピ 結果', layout_tables, resizable = True)
 
@@ -112,7 +113,7 @@ html_script_end  = \
 # Event Loop to process "events" and get the "values" of the inputs
 while True:
     event, values = window.read()
-    if event in (sg.WIN_CLOSED, 'Exit'):
+    if event in (sg.WIN_CLOSED, '保存せずに終了'):
         break
     if event in ("HTMLに出力"):
         os.mkdir("temp") # 一時フォルダの作成
@@ -126,6 +127,6 @@ while True:
             f.write(bound_html) # html出力
             f.write(html_script_end)
         shutil.rmtree("temp/") # 一時フォルダの削除
-        print(sg.popup_ok('HTMLファイルを出力しました！'))
+        print(sg.popup_scrolled('HTMLファイルを出力しました！\n' +"保存先: " + os.path.abspath(str(datetime.date.today()) + ".html")))
         break
 window.close()

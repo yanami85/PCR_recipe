@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 
 @dataclass #required python >= 3.7
-class pcr_recipe: #インスタンス
+class pcr_recipe: # インスタンス
     primer_fw: str = "" # primerの塩基配列
     primer_rv: str = ""
     amplify_region: str = "" # 増幅させる予定の塩基配列
@@ -46,8 +46,8 @@ class pcr_recipe: #インスタンス
                 ["94°C", "2 min"],
                 ["94°C", "15 sec"],
                 [str(round(self.tm_value_NN - 5)) + "°C", "30 sec"],
-                ["68°C",  str(round(self.amplify_regipon_kbp, 2)*60) + " sec"]
-                ]
+                ["68°C",  str(round(self.amplify_regipon_kbp*60, 2)) + " sec"]
+            ]
                 
         elif self.reagent_name == "KOD One":
             # 1 kb以下:1 sec.
@@ -63,13 +63,13 @@ class pcr_recipe: #インスタンス
                     self.thermal_list = [
                     ["98°C", "10 sec"],
                     [str(round(self.tm_value_NN - 5)) + "°C", "5 sec"],
-                    ["68°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"]
+                    ["68°C", str(round(self.amplify_regipon_kbp*5, 2)) + "sec"]
                 ]
             elif self.amplify_regipon_kbp >= 10:
                     self.thermal_list = [
                     ["98°C", "10 sec"],
                     [str(round(self.tm_value_NN - 5)) + "°C", "5 sec"],
-                    ["68°C", str(round(self.amplify_regipon_kbp, 2)*10) + "sec"]
+                    ["68°C", str(round(self.amplify_regipon_kbp*10, 2)) + "sec"]
                 ]
                 
         elif self.reagent_name == "PrimeSTAR": # PrimeSTARの時の温度設定
@@ -80,14 +80,14 @@ class pcr_recipe: #インスタンス
                 self.thermal_list = [
                 ["98°C", "10 sec"],
                 ["55°C", "15 sec"],
-                ["72°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"],
-                ]
+                ["72°C", str(round(self.amplify_regipon_kbp*5, 2)) + "sec"],
+            ]
             else:
                 self.thermal_list = [
                 ["98°C", "10 sec"],
                 ["55°C", "5 sec"],
-                ["72°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"],
-                ]
+                ["72°C", str(round(self.amplify_regipon_kbp*5, 2)) + "sec"],
+            ]
         elif self.reagent_name == "Ex Taq": # PrimeSTARの時の温度設定
             # Tm値(tm_value_Wallace -5)が55℃以上の場合→5 sec.に設定
             # Tm値(tm_value_Wallace - 5)が55℃未満の場合→15 sec.に設定
@@ -95,7 +95,7 @@ class pcr_recipe: #インスタンス
                 self.thermal_list = [
                 ["98°C", "10 sec"],
                 ["55°C", "30 sec"],
-                ["72°C", str(round(self.amplify_regipon_kbp, 2)*60) + "sec"],
+                ["72°C", str(round(self.amplify_regipon_kbp*60, 2)) + "sec"],
                 ]
         self.thermal_col_name = ["Temperature","Time"]
         self.thermal_table = pd.DataFrame(self.thermal_list, columns = self.thermal_col_name)
@@ -107,7 +107,7 @@ class pcr_recipe: #インスタンス
         if self.reagent_name == "KOD -Plus-":
             self.conc_list = [
                 ["10×PCR Buffer", self.total_vol_μL_per_sample/10, self.sample_amount/10, "1x"],
-                ["25 mM MgSO4 solution", round(self.total_vol_μL_per_sample/16.7, 2), round(self.sample_amount/16.7, 2), "1.5 mM"],
+                ["25 mM MgSO4 solution", round(self.total_vol_μL_per_sample/25, 2), round(self.sample_amount/25, 2), "1.0 mM"],
                 [str(self.primer_conc_μM) + " μM Primer_fw", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
                 [str(self.primer_conc_μM) + " μM Primer_rv", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
                 ["2 mM dNTPs", self.total_vol_μL_per_sample/10, self.sample_amount/10, "0.2 mM"],
