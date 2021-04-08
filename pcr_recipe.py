@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 
 @dataclass #required python >= 3.7
-class pcr_recipe: #インスタンス
+class pcr_recipe: # インスタンス
     primer_fw: str = "" # primerの塩基配列
     primer_rv: str = ""
     amplify_region: str = "" # 増幅させる予定の塩基配列
@@ -46,8 +46,8 @@ class pcr_recipe: #インスタンス
                 ["94°C", "2 min"],
                 ["94°C", "15 sec"],
                 [str(round(self.tm_value_NN - 5)) + "°C", "30 sec"],
-                ["68°C",  str(round(self.amplify_regipon_kbp, 2)*60) + " sec"]
-                ]
+                ["68°C",  str(round(self.amplify_regipon_kbp*60, 2)) + " sec"]
+            ]
                 
         elif self.reagent_name == "KOD One":
             # 1 kb以下:1 sec.
@@ -63,13 +63,13 @@ class pcr_recipe: #インスタンス
                     self.thermal_list = [
                     ["98°C", "10 sec"],
                     [str(round(self.tm_value_NN - 5)) + "°C", "5 sec"],
-                    ["68°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"]
+                    ["68°C", str(round(self.amplify_regipon_kbp*5, 2)) + "sec"]
                 ]
             elif self.amplify_regipon_kbp >= 10:
                     self.thermal_list = [
                     ["98°C", "10 sec"],
                     [str(round(self.tm_value_NN - 5)) + "°C", "5 sec"],
-                    ["68°C", str(round(self.amplify_regipon_kbp, 2)*10) + "sec"]
+                    ["68°C", str(round(self.amplify_regipon_kbp*10, 2)) + "sec"]
                 ]
                 
         elif self.reagent_name == "PrimeSTAR": # PrimeSTARの時の温度設定
@@ -80,14 +80,14 @@ class pcr_recipe: #インスタンス
                 self.thermal_list = [
                 ["98°C", "10 sec"],
                 ["55°C", "15 sec"],
-                ["72°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"],
-                ]
+                ["72°C", str(round(self.amplify_regipon_kbp*5, 2)) + "sec"],
+            ]
             else:
                 self.thermal_list = [
                 ["98°C", "10 sec"],
                 ["55°C", "5 sec"],
-                ["72°C", str(round(self.amplify_regipon_kbp, 2)*5) + "sec"],
-                ]
+                ["72°C", str(round(self.amplify_regipon_kbp*5, 2)) + "sec"],
+            ]
         elif self.reagent_name == "Ex Taq": # PrimeSTARの時の温度設定
             # Tm値(tm_value_Wallace -5)が55℃以上の場合→5 sec.に設定
             # Tm値(tm_value_Wallace - 5)が55℃未満の場合→15 sec.に設定
@@ -95,7 +95,7 @@ class pcr_recipe: #インスタンス
                 self.thermal_list = [
                 ["98°C", "10 sec"],
                 ["55°C", "30 sec"],
-                ["72°C", str(round(self.amplify_regipon_kbp, 2)*60) + "sec"],
+                ["72°C", str(round(self.amplify_regipon_kbp*60, 2)) + "sec"],
                 ]
         self.thermal_col_name = ["Temperature","Time"]
         self.thermal_table = pd.DataFrame(self.thermal_list, columns = self.thermal_col_name)
@@ -105,9 +105,18 @@ class pcr_recipe: #インスタンス
         self.create_thermal_cycle_plan()
         self.sample_amount = self.total_vol_μL_per_sample*self.sample_size*1.2
         if self.reagent_name == "KOD -Plus-":
+            # 10×PCR Buffer(KOD -Plus-用) 5μL
+            # 25mM MgSO4 2μL(1mM)
+            # 各Primer 15pmol each 2mM
+            # dNTPs 5μL(0.2mM)
+            # 鋳型 1〜50ng(Plasmid)
+            #   10〜200ng(Genomic DNA)
+            #   〜1μL(逆転写反応液)*
+            # KOD -Plus-(1U/μL) 1μL(1U)
+            # Total Volume 50μL
             self.conc_list = [
                 ["10×PCR Buffer", self.total_vol_μL_per_sample/10, self.sample_amount/10, "1x"],
-                ["25 mM MgSO4 solution", round(self.total_vol_μL_per_sample/16.7, 2), round(self.sample_amount/16.7, 2), "1.5 mM"],
+                ["25 mM MgSO4 solution", round(self.total_vol_μL_per_sample/25, 2), round(self.sample_amount/25, 2), "1.0 mM"],
                 [str(self.primer_conc_μM) + " μM Primer_fw", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
                 [str(self.primer_conc_μM) + " μM Primer_rv", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
                 ["2 mM dNTPs", self.total_vol_μL_per_sample/10, self.sample_amount/10, "0.2 mM"],
@@ -115,6 +124,11 @@ class pcr_recipe: #インスタンス
                 ["KOD plus (1U/μL)", self.total_vol_μL_per_sample/50, self.sample_amount/50, "1 U"]
             ]
         elif self.reagent_name == "PrimeSTAR" or self.reagent_name == "KOD One":
+            # PrimeSTAR Max Premix（2×）	25 μl	1×
+            # Primer1	10～15 pmol	0.2～0.3 μM
+            # Primer2	10～15 pmol	0.2～0.3 μM
+            # Template	＜200 ng*
+            # 滅菌精製水	up to 50 μl
             self.conc_list = [
                 [str(self.reagent_name) + " Premix (2×)", self.total_vol_μL_per_sample/2, self.sample_amount/2, "1x"],
                 [str(self.primer_conc_μM) + " μM Primer_fw", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
@@ -122,6 +136,13 @@ class pcr_recipe: #インスタンス
                 [str(self.template_conc_ng_μL) + " ng/μL Template DNA", self.total_vol_μL_per_sample/(self.template_conc_ng_μL/0.04), self.sample_amount/(self.template_conc_ng_μL/0.04), "0.04 ng/μL"],
             ]
         elif self.reagent_name == "Ex Taq":
+            # TaKaRa Ex Taq （5 U/μl）	0.25 μl
+            # 10×Ex Taq Buffer*	5 μl
+            # dNTP Mixture （各2.5 mM）	4 μl
+            # Template	＜500 ng
+            # Primer 1	0.2～1.0 μM（final conc.）
+            # Primer 2	0.2～1.0 μM（final conc.）
+            # 滅菌精製水	up to 50 μl
             self.conc_list = [
                 ["10×PCR Buffer", self.total_vol_μL_per_sample/10, self.sample_amount/10, "1x"],
                 [str(self.primer_conc_μM) + " μM Primer_fw", self.total_vol_μL_per_sample/(self.primer_conc_μM/0.3), round(self.sample_amount/(self.primer_conc_μM/0.3), 3), "0.3 μM"],
@@ -132,7 +153,7 @@ class pcr_recipe: #インスタンス
             ]
         self.conc_col_name = ["Reagent", r"Usage/sample (μL)", "必要量 (μL)", "Final concentration"] # Column name
         self.conc_table= pd.DataFrame(self.conc_list, columns= self.conc_col_name) # tableをDataFrameで作成
-        self.dw_list = ["DW", self.total_vol_μL_per_sample - self.conc_table["Usage/sample (μL)"].sum(), self.sample_amount - self.conc_table["必要量 (μL)"].sum(), "-"] # Total量からDWの必要量を計算
+        self.dw_list = ["DW", round(self.total_vol_μL_per_sample - self.conc_table["Usage/sample (μL)"].sum(), 1), round(self.sample_amount - self.conc_table["必要量 (μL)"].sum(),1), "-"] # Total量からDWの必要量を計算
         self.conc_table_total = ["Total", self.total_vol_μL_per_sample,  self.sample_amount, "-"]
         self.conc_table.loc[7] = self.dw_list
         self.conc_table.loc[8] = self.conc_table_total
