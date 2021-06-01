@@ -2,8 +2,13 @@
 
 ## What's PCR_recipe?
 PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に出力するソフト。  
+<<<<<<< HEAD
 **python > 3.7が必要です**
 現在**KOD Plus, KOD One, PrimeSTAR, Ex Taq**に対応。
+=======
+**python > 3.7が必須です。**
+現在**KOD Plus, KOD One, PrimeSTAR, EX Taq**に対応。
+>>>>>>> refs/remotes/origin/master
 ## 必要なもの
 + dataclasses 0.6
 + Biopython 1.78
