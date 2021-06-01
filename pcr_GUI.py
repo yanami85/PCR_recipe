@@ -1,6 +1,6 @@
 # coding: utf-8
 # PCR_recipe.pyと同じディレクトリにこのファイルを置く
-from  pcr_recipe import pcr_recipe
+from  main import pcr_recipe
 import PySimpleGUI as sg
 import pandas as pd
 import datetime
