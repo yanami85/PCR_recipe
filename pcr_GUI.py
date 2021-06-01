@@ -1,12 +1,13 @@
 # coding: utf-8
 # PCR_recipe.pyと同じディレクトリにこのファイルを置く
-from  pcr_recipe import pcr_recipe
+from  main import pcr_recipe
 import PySimpleGUI as sg
 import pandas as pd
 import datetime
 import os
 import shutil
 from bs4 import BeautifulSoup
+import webbrowser
 
 def bind_html(html_path_list: list) -> str:
     '''複数のhtmlを順番に結合する
@@ -127,6 +128,11 @@ while True:
             f.write(bound_html) # html出力
             f.write(html_script_end)
         shutil.rmtree("temp/") # 一時フォルダの削除
-        print(sg.popup_scrolled('HTMLファイルを出力しました！\n' +"保存先: " + os.path.abspath(str(datetime.date.today()) + ".html")))
+        print(sg.popup('HTMLファイルを出力しました！\n' +"保存先: " + os.path.abspath(str(datetime.date.today()) + ".html")))
+        html_path = os.path.abspath(str(datetime.date.today()) + ".html")
         break
 window.close()
+
+if 'html_path' in locals():
+    browser = webbrowser.get('"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" %s')
+    browser.open(html_path)

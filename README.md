@@ -2,8 +2,8 @@
 
 ## What's PCR_recipe?
 PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に出力するソフト。  
-**python > 3.7を推奨します。**
-現在**KOD Plus, KOD One, PrimeSTAR, Taq EX**に対応。
+**python > 3.7が必要です**
+現在**KOD Plus, KOD One, PrimeSTAR, Ex Taq**に対応。
 ## 必要なもの
 + dataclasses 0.6
 + Biopython 1.78
@@ -12,7 +12,7 @@ PCRで必要な各種試薬の量やthermal cyclerの温度設定を自動的に
 + pySimpleGUI 4.38.0
 
 pip or anacondaで適宜入れて下さい。  
-(**python 3.9だとBiopython 1.78をインストールできない可能性があります。
+(**python 3.9だとBiopython 1.78をインストールできない可能性があります。  
 その場合はBiopython 1.77をインストールして下さい**)
 
 ## 使用方法
