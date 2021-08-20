@@ -33,14 +33,14 @@ def bind_html(html_path_list: list) -> str:
 
 # レイアウト設計
 layout_input =[
-    [sg.Text("プライマー foward (5' → 3')",size=(25,1)), sg.InputText(key = 'primer_fw')],
-    [sg.Text("プライマー reverse (5' → 3')",size=(25,1)), sg.InputText(key = 'primer_rv')],
-    [sg.Text("プライマー濃度 (μM)",size=(25,1)), sg.InputText("10", key = 'primer_conc_μM')],
-    [sg.Text("増幅する領域",size=(25,1)), sg.InputText(key = 'amplify_region')],
-    [sg.Text("テンプレート濃度 (ng/μL)",size=(25,1)), sg.InputText("1", key = 'template_conc_ng_μL')],
-    [sg.Text("使うメーカー",size=(25,1)), sg.Combo(["KOD -Plus-", "KOD One", "PrimeSTAR", "Ex Taq"])],
-    [sg.Text("サンプルの本数",size=(25,1)), sg.InputText("1", key = 'sample_size')],
-    [sg.Text("反応総量 (μL)",size=(25,1)), sg.InputText("25", key = 'total_vol_μL_per_sample')],
+    [sg.Text("プライマー foward (5' → 3')",size=(25, 1)), sg.InputText(key = 'primer_fw')],
+    [sg.Text("プライマー reverse (5' → 3')",size=(25, 1)), sg.InputText(key = 'primer_rv')],
+    [sg.Text("プライマー濃度 (μM)",size=(25, 1)), sg.InputText("10", key = 'primer_conc_μM')],
+    [sg.Text("増幅する領域",size=(25, 1)), sg.InputText(key = 'amplify_region')],
+    [sg.Text("テンプレート濃度 (ng/μL)",size=(25, 1)), sg.InputText("1", key = 'template_conc_ng_μL')],
+    [sg.Text("使うメーカー",size=(25, 1)), sg.Combo(["KOD -Plus-", "KOD One", "PrimeSTAR", "Ex Taq"])],
+    [sg.Text("サンプルの本数",size=(25, 1)), sg.InputText("1", key = 'sample_size')],
+    [sg.Text("反応総量 (μL)",size=(25, 1)), sg.InputText("25", key = 'total_vol_μL_per_sample')],
     [sg.Submit(button_text = "Cancel"), sg.Submit(button_text = "次へ")]
     ]
 # 窓を作る
@@ -70,11 +70,11 @@ pcr.total_vol_μL_per_sample = int(values["total_vol_μL_per_sample"])
 pcr.create_pcr_recipe()
 
 column_1 = [
-    [sg.Text("プライマー forward: " + str(pcr.primer_fw_seq), size=(50,2))],
-    [sg.Text("プライマー reverse: " + str(pcr.primer_rv_seq), size=(50,2))],
-    [sg.Text("Tm値 (Wallace法): " + str(round(pcr.tm_value_Wallace, 1)) + "°C",size=(25,1))],
-    [sg.Text("Tm値 (GC法): " + str(round(pcr.tm_value_GC, 1)) + "°C",size=(25,1))],
-    [sg.Text("Tm値 (最近接塩基法): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(25,1))],
+    [sg.Text("プライマー forward: " + str(pcr.primer_fw_seq), size=(50, 2))],
+    [sg.Text("プライマー reverse: " + str(pcr.primer_rv_seq), size=(50, 2))],
+    [sg.Text("Tm値 (Wallace法): " + str(round(pcr.tm_value_Wallace, 1)) + "°C",size=(25, 1))],
+    [sg.Text("Tm値 (GC法): " + str(round(pcr.tm_value_GC, 1)) + "°C",size=(25, 1))],
+    [sg.Text("Tm値 (最近接塩基法, 推奨値): " + str(round(pcr.tm_value_NN, 1)) + "°C",size=(25, 1))],
     [sg.Text("試薬: " + str(pcr.reagent_name))]
     ]
 
