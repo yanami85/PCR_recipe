@@ -132,7 +132,3 @@ while True:
         html_path = os.path.abspath(str(datetime.date.today()) + ".html")
         break
 window.close()
-
-if 'html_path' in locals():
-    browser = webbrowser.get('"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" %s')
-    browser.open(html_path)
